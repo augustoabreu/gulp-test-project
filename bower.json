@@ -1,0 +1,19 @@
+{
+  "name": "mobile-teste",
+  "description": "mobile-teste",
+  "main": "gulpfile.js",
+  "private": true,
+  "dependencies": {
+    "jquery": "1.10.2",
+    "jquery-mobile": "http://jquerymobile.com/resources/download/jquery.mobile-1.4.5.zip"
+  },
+  "install": {
+    "path": "assets/common/libs",
+    "sources": {
+      "jquery-mobile": [
+        "bower_components/jquery-mobile/jquery.mobile-1.4.5.js",
+        "bower_components/jquery-mobile/jquery.mobile.structure-1.4.5.css"
+      ]
+    }
+  }
+}

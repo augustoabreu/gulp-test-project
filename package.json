@@ -1,0 +1,41 @@
+{
+  "name": "mobile-teste",
+  "version": "0.0.1",
+  "description": "mobile-teste",
+  "main": "gulpfile.js",
+  "devDependencies": {
+    "async": "^2.0.0-rc.6",
+    "browser-sync": "^2.13.0",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-cache": "^0.4.5",
+    "gulp-consolidate": "^0.2.0",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-iconfont": "^8.0.1",
+    "gulp-imagemin": "^3.0.1",
+    "gulp-sass": "^2.2.0",
+    "gulp.spritesmith": "^6.2.1",
+    "lodash": "^4.13.1",
+    "run-sequence": "^1.1.5",
+    "sassdoc": "^2.1.20",
+    "yargs": "^4.7.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.amil.com.br"
+  },
+  "keywords": [
+    "boilerplate",
+    "frontend",
+    "sass",
+    "development",
+    "project",
+    "simple",
+    "basic"
+  ],
+  "license": "MIT"
+}

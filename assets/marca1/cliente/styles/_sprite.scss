@@ -1,0 +1,118 @@
+/*
+SCSS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: $icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+$icon-home: x y offset_x offset_y width height total_width total_height image_path;
+
+At the bottom of this section, we provide information about the spritesheet itself
+$spritesheet: width height image $spritesheet-sprites;
+*/
+$approved-name: 'approved';
+$approved-x: 0px;
+$approved-y: 0px;
+$approved-offset-x: 0px;
+$approved-offset-y: 0px;
+$approved-width: 40px;
+$approved-height: 32px;
+$approved-total-width: 40px;
+$approved-total-height: 107px;
+$approved-image: '../images/sprite.png';
+$approved: (0px, 0px, 0px, 0px, 40px, 32px, 40px, 107px, '../images/sprite.png', 'approved', );
+$canceled-name: 'canceled';
+$canceled-x: 0px;
+$canceled-y: 74px;
+$canceled-offset-x: 0px;
+$canceled-offset-y: -74px;
+$canceled-width: 40px;
+$canceled-height: 33px;
+$canceled-total-width: 40px;
+$canceled-total-height: 107px;
+$canceled-image: '../images/sprite.png';
+$canceled: (0px, 74px, 0px, -74px, 40px, 33px, 40px, 107px, '../images/sprite.png', 'canceled', );
+$icon-name: 'icon';
+$icon-x: 0px;
+$icon-y: 37px;
+$icon-offset-x: 0px;
+$icon-offset-y: -37px;
+$icon-width: 32px;
+$icon-height: 32px;
+$icon-total-width: 40px;
+$icon-total-height: 107px;
+$icon-image: '../images/sprite.png';
+$icon: (0px, 37px, 0px, -37px, 32px, 32px, 40px, 107px, '../images/sprite.png', 'icon', );
+$spritesheet-width: 40px;
+$spritesheet-height: 107px;
+$spritesheet-image: '../images/sprite.png';
+$spritesheet-sprites: ($approved, $canceled, $icon, );
+$spritesheet: (40px, 107px, '../images/sprite.png', $spritesheet-sprites, );
+
+/*
+The provided mixins are intended to be used with the array-like variables
+
+.icon-home {
+  @include sprite-width($icon-home);
+}
+
+.icon-email {
+  @include sprite($icon-email);
+}
+
+Example usage in HTML:
+
+`display: block` sprite:
+<div class="icon-home"></div>
+
+To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+
+// CSS
+.icon {
+  display: inline-block;
+}
+
+// HTML
+<i class="icon icon-home"></i>
+*/
+@mixin sprite-width($sprite) {
+  width: nth($sprite, 5);
+}
+
+@mixin sprite-height($sprite) {
+  height: nth($sprite, 6);
+}
+
+@mixin sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3);
+  $sprite-offset-y: nth($sprite, 4);
+  background-position: $sprite-offset-x  $sprite-offset-y;
+}
+
+@mixin sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+}
+
+@mixin sprite($sprite) {
+  @include sprite-image($sprite);
+  @include sprite-position($sprite);
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+}
+
+/*
+The `sprites` mixin generates identical output to the CSS template
+  but can be overridden inside of SCSS
+
+@include sprites($spritesheet-sprites);
+*/
+@mixin sprites($sprites) {
+  @each $sprite in $sprites {
+    $sprite-name: nth($sprite, 10);
+    .#{$sprite-name} {
+      @include sprite($sprite);
+    }
+  }
+}

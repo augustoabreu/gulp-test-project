@@ -1,0 +1,1 @@
+console.log('some template view loaded');

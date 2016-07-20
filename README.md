@@ -5,7 +5,7 @@
 ```
 > npm install
 ```
-### cliente dependencies
+### client dependencies
 ```
 > bower-installer
 ```

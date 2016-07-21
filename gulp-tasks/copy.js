@@ -10,13 +10,16 @@ gulp.task('copy', function(){
 });
 
 function copyCommonTask(app, brand) {
+    var sourceCommon = [
+        config.env.appDir + '/common/**/!('+ app +')/*',
+        config.env.appDir + '/common/*.*',
+        '!' + config.env.appDir + '/common/**/svg{,/**}',
+        '!' + config.env.appDir + '/common/**/styles{,/**}'
+    ];
+
     return gulp
-        .src([
-            config.env.appDir + '/common/**/!('+ app +')/*',
-            config.env.appDir + '/common/*.*',
-            '!' + config.env.appDir + '/common/**/svg{,/**}',
-            '!' + config.env.appDir + '/common/**/styles{,/**}'
-        ])
+        // .src(config.env.appDir + '/common/**/!(svg|sprites|styles|'+ app +')/*')
+        .src(sourceCommon)
         .pipe(gulp.dest(config.env.buildDir + '/' + app + '/' + brand + '/common'))
         .pipe(browserSync.reload({stream:true}))
 }
@@ -30,12 +33,14 @@ function copyAppTask(app, brand) {
 
 
 function copyBrandTask(app, brand) {
+    var sourceContext = [
+        config.env.appDir + '/'+ brand +'/' + app + '/**/*',
+        '!' + config.env.appDir + '/'+ brand +'/' + app + '/**/styles{,/**}',
+        '!' + config.env.appDir + '/'+ brand +'/' + app + '/**/sprites{,/**}'
+    ];
+
     return gulp
-        .src([
-            config.env.appDir + '/'+ brand +'/' + app + '/**/*',
-            '!' + config.env.appDir + '/'+ brand +'/' + app + '/**/styles{,/**}',
-            '!' + config.env.appDir + '/'+ brand +'/' + app + '/**/sprites{,/**}'
-        ])
+        .src(sourceContext)
         .pipe(gulp.dest(config.env.buildDir + '/'+ app + '/' + brand))
         .pipe(browserSync.reload({stream:true}))
 }

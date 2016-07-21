@@ -1,12 +1,14 @@
 var gulp = require('gulp');
+var browserSync = require('browser-sync');
 var config = require('./config.js');
 var argv = require('yargs').argv;
-var browserSync = require('browser-sync');
 
-gulp.task('browserSync', browserSyncTask(argv.app, argv.brand));
+gulp.task('browserSync', function(){
+    browserSyncTask(argv.app, argv.brand)
+});
 
 function browserSyncTask(app, brand) {
-    browserSync({
+    return browserSync({
         port: 3000,
         server: {
           baseDir: config.env.buildDir + '/' + app + '/' + brand

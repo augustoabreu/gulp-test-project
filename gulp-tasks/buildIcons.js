@@ -15,7 +15,7 @@ function iconFontTask(done){
     async.parallel([
         function handleGlyphs (cb) {
             iconStream.on('glyphs', function(glyphs, options) {
-                gulp.src(config.env.appDir + '/common/**/templates/_icons.scss')
+                gulp.src(config.env.appDir + '/common/styles/tools/_icons.scss')
                 .pipe(consolidate('lodash', {
                     glyphs: glyphs,
                     fontName: iconFontName,

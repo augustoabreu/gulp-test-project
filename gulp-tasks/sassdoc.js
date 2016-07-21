@@ -1,6 +1,6 @@
 var gulp = require('gulp');
-var config = require('./config.js');
 var sassdoc = require('sassdoc');
+var config = require('./config.js');
 
 gulp.task('sassdoc', sassdocTask);
 

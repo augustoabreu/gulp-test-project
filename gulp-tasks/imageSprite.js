@@ -18,6 +18,10 @@ function imageSpriteTask(app, brand) {
             })
         );
 
-    sprite.css.pipe(gulp.dest(config.env.appDir + '/' + brand + '/' + app + '/styles'));
-    sprite.img.pipe(gulp.dest(config.env.appDir + '/' + brand + '/' + app + '/images'));
+    sprite.css.pipe(
+        gulp.dest(config.env.appDir + '/' + brand + '/' + app + '/styles')
+    );
+    sprite.img.pipe(
+        gulp.dest(config.env.appDir + '/' + brand + '/' + app + '/images')
+    );
 }

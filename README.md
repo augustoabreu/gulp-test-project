@@ -13,11 +13,11 @@
 
 ### Development
 ```
-$ gulp build:dev --app cliente --brand marca1
+$ gulp --app cliente --brand marca1
 ```
 ### Production
 ```
-$ gulp build:prod --app cliente --brand marca1
+$ gulp --app cliente --brand marca1 --prod
 ```
 ---------------
 ## This is my file/directory structure in development

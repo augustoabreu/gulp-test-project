@@ -8,6 +8,4 @@ require('./gulp-tasks/cssmin.js');
 require('./gulp-tasks/imagemin.js');
 // require('./gulp-tasks/sassdoc.js');
 
-require('./gulp-tasks/buildDev.js');
-require('./gulp-tasks/buildProd.js');
-require('./gulp-tasks/buildIcons.js');
+require('./gulp-tasks/build.js');

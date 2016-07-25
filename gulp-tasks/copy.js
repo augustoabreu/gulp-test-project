@@ -2,45 +2,62 @@ var gulp = require('gulp');
 var config = require('./config.js');
 var argv = require('yargs').argv;
 var browserSync = require('browser-sync');
+var plumber = require('gulp-plumber');
+var merge = require('merge-stream');
 
 gulp.task('copy', function(){
-    copyCommonTask(argv.app, argv.brand);
-    copyAppTask(argv.app, argv.brand);
-    copyBrandTask(argv.app, argv.brand);
+    if(argv.app == null && argv.brand == null){
+        var apps =  {
+            'cliente': {0 : 'marca1'}
+            // 'outroApp': {0: 'marca1', 1: 'marca2'}
+         }
+
+         var app = Object.keys(apps);
+
+         app.forEach(function(app) {
+           var items = Object.keys(apps[app]);
+
+           items.forEach(function(brand) {
+             copyTask(app, apps[app][brand]);
+           });
+         });
+
+    }else{
+        copyTask(argv.app, argv.brand);
+    }
 });
 
-function copyCommonTask(app, brand) {
+function copyTask(app, brand) {
     var sourceCommon = [
-        config.env.appDir + '/common/**/!('+ app +')/*',
-        config.env.appDir + '/common/*.*',
-        '!' + config.env.appDir + '/common/**/svg{,/**}',
-        '!' + config.env.appDir + '/common/**/styles{,/**}'
+        '**/!('+ app +')/*',
+        '*.*',
+        '!' + '**/svg{,/**}',
+        '!' + '**/styles{,/**}'
     ];
 
-    return gulp
-        // .src(config.env.appDir + '/common/**/!(svg|sprites|styles|'+ app +')/*')
-        .src(sourceCommon)
-        .pipe(gulp.dest(config.env.buildDir + '/' + app + '/' + brand + '/common'))
-        .pipe(browserSync.reload({stream:true}))
-}
-
-function copyAppTask(app, brand) {
-    return gulp
-        .src(config.env.appDir + '/common/' + app + '/**/*')
-        .pipe(gulp.dest(config.env.buildDir + '/' + app + '/' + brand))
-        .pipe(browserSync.reload({stream:true}))
-}
-
-
-function copyBrandTask(app, brand) {
     var sourceContext = [
-        config.env.appDir + '/'+ brand +'/' + app + '/**/*',
-        '!' + config.env.appDir + '/'+ brand +'/' + app + '/**/styles{,/**}',
-        '!' + config.env.appDir + '/'+ brand +'/' + app + '/**/sprites{,/**}'
+        '**/*',
+        '!' + '**/styles{,/**}',
+        '!' + '**/sprites{,/**}'
     ];
 
-    return gulp
-        .src(sourceContext)
+    var copyCommon = gulp
+        // .src(config.env.appDir + '/common/**/!(svg|sprites|styles|'+ app +')/*')
+        .src(sourceCommon, {cwd: config.env.appDir + '/common/'})
+        .pipe(gulp.dest(config.env.buildDir + '/' + app + '/' + brand + '/common'))
+
+    var copyApp = gulp
+        .src('**/*', {cwd: config.env.appDir + '/common/' + app})
+        .pipe(gulp.dest(config.env.buildDir + '/' + app + '/' + brand))
+
+    var copyAppBrand = gulp
+        .src(sourceContext, {cwd: config.env.appDir + '/'+ brand +'/' + app})
         .pipe(gulp.dest(config.env.buildDir + '/'+ app + '/' + brand))
-        .pipe(browserSync.reload({stream:true}))
+
+    return merge(
+            copyCommon,
+            copyApp,
+            copyAppBrand
+        )
+        .pipe(browserSync.reload({stream:true}));
 }

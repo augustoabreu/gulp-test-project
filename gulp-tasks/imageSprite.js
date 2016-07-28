@@ -2,8 +2,12 @@ var gulp = require('gulp');
 var config = require('./config.js');
 var argv = require('yargs').argv;
 var spritesmith = require('gulp.spritesmith');
+var merge = require('merge-stream');
 
-gulp.task('imageSprite', imageSpriteTask(argv.app, argv.brand));
+
+gulp.task('imageSprite', function() {
+    return imageSpriteTask(argv.app, argv.brand);
+});
 
 function imageSpriteTask(app, brand) {
     var sprite = gulp
@@ -18,10 +22,12 @@ function imageSpriteTask(app, brand) {
             })
         );
 
-    sprite.css.pipe(
+    var css = sprite.css.pipe(
         gulp.dest(config.env.appDir + '/' + brand + '/' + app + '/styles')
     );
-    sprite.img.pipe(
+    var img = sprite.img.pipe(
         gulp.dest(config.env.appDir + '/' + brand + '/' + app + '/images')
     );
+
+    return merge(css, img);
 }

@@ -8,7 +8,7 @@ var outputStyle = argv.prod ? 'compressed' : 'expanded';
 var sourceComments = argv.prod ? '' : true;
 
 gulp.task('sass', function(){
-    sassTask(argv.app, argv.brand);
+    return sassTask(argv.app, argv.brand);
 });
 
 function sassTask(app, brand) {

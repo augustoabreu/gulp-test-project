@@ -5,7 +5,7 @@ var browserSync = require('browser-sync');
 var plumber = require('gulp-plumber');
 var merge = require('merge-stream');
 
-gulp.task('copy', function(){
+gulp.task('copy', function(done){
     if(argv.app == null && argv.brand == null){
         var apps =  {
             'cliente': {0 : 'marca1'}
@@ -14,16 +14,18 @@ gulp.task('copy', function(){
 
          var app = Object.keys(apps);
 
-         app.forEach(function(app) {
+         app.forEach(function(app, j) {
            var items = Object.keys(apps[app]);
 
-           items.forEach(function(brand) {
+           items.forEach(function(brand, i) {
              copyTask(app, apps[app][brand]);
            });
+
+           if (j === app.length) done();
          });
 
     }else{
-        copyTask(argv.app, argv.brand);
+        return copyTask(argv.app, argv.brand);
     }
 });
 

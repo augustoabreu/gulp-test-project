@@ -1,3 +1,7 @@
 .search-box {
   border: solid 1px #000;
 }
+
+.teste-sprite {
+	@include sprite($approved);
+}
